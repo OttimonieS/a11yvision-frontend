@@ -1,4 +1,5 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://api.a11yvision.labnexus.my.id";
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id";
 
 export interface StartScanResponse {
   scanId: string;
