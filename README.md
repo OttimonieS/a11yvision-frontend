@@ -13,7 +13,7 @@ Accessibility scanning frontend application built with React, TypeScript, and Vi
 
 1. **Configure Environment Variables**
 
-   - Copy `frontend/.env.example` to `frontend/.env.local`
+   - Copy `.env.example` to `.env.local`
    - Set `VITE_API_BASE_URL` to your backend API URL
 
 2. **Deploy to Vercel**
@@ -40,7 +40,6 @@ Accessibility scanning frontend application built with React, TypeScript, and Vi
 ## Local Development
 
 ```bash
-cd frontend
 npm install
 npm run dev
 ```
@@ -48,8 +47,7 @@ npm run dev
 ## Build
 
 ```bash
-cd frontend
 npm run build
 ```
 
-The build output will be in `frontend/dist/`
+The build output will be in `dist/`
