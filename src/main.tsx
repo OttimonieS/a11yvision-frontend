@@ -109,7 +109,6 @@ const router = createBrowserRouter(
   {
     future: {
       v7_relativeSplatPath: true,
-      // @ts-expect-error - v7_startTransition not in current types but valid runtime flag
       v7_startTransition: true,
     },
   }
