@@ -21,7 +21,7 @@ const Settings: React.FC = () => {
     if (!token) return;
 
     fetch(
-      (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000") +
+      (import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id") +
         "/api/v1/settings",
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -46,7 +46,7 @@ const Settings: React.FC = () => {
     setMessage("");
     try {
       const res = await fetch(
-        (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000") +
+        (import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id") +
           "/api/v1/settings",
         {
           method: "PUT",

@@ -78,7 +78,7 @@ const App: React.FC = () => {
         const fileName = localPath.split(/\\|\//).pop();
         setScreenshot(
           `${
-            import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+            import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id"
           }/screenshots/${fileName}`
         );
       }
@@ -108,7 +108,7 @@ const App: React.FC = () => {
             const fileName = status.result.screenshotPath.split(/\\|\//).pop();
             setScreenshot(
               `${
-                import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+                import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id"
               }/screenshots/${fileName}`
             );
           }

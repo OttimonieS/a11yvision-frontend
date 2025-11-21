@@ -282,7 +282,7 @@ const Help: React.FC = () => {
         <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto">
           <div className="mb-4">
             <div className="text-gray-400"># Start a new scan</div>
-            <div>curl -X POST http://localhost:8000/api/v1/scans \</div>
+            <div>curl -X POST https://api.a11yvision.labnexus.my.id/api/v1/scans \</div>
             <div className="ml-4">
               -H "Authorization: Bearer YOUR_API_KEY" \
             </div>
@@ -293,12 +293,12 @@ const Help: React.FC = () => {
           </div>
           <div className="mb-4">
             <div className="text-gray-400"># Get scan results</div>
-            <div>curl http://localhost:8000/api/v1/scans/SCAN_ID/result \</div>
+            <div>curl https://api.a11yvision.labnexus.my.id/api/v1/scans/SCAN_ID/result \</div>
             <div className="ml-4">-H "Authorization: Bearer YOUR_API_KEY"</div>
           </div>
           <div>
             <div className="text-gray-400"># List all scans</div>
-            <div>curl http://localhost:8000/api/v1/scans \</div>
+            <div>curl https://api.a11yvision.labnexus.my.id/api/v1/scans \</div>
             <div className="ml-4">-H "Authorization: Bearer YOUR_API_KEY"</div>
           </div>
         </div>

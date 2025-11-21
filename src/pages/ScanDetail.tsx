@@ -35,7 +35,7 @@ const ScanDetail: React.FC = () => {
   useEffect(() => {
     if (!scanId) return;
     fetch(
-      (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000") +
+      (import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id") +
         `/api/v1/scans/${scanId}/result`
     )
       .then((res) => res.json())
@@ -76,7 +76,7 @@ const ScanDetail: React.FC = () => {
   }
 
   const screenshotUrl = result.screenshots?.[0]?.url
-    ? `http://localhost:8000/screenshots/${result.screenshots[0].url
+    ? `https://api.a11yvision.labnexus.my.id/screenshots/${result.screenshots[0].url
         .split("/")
         .pop()}`
     : "";

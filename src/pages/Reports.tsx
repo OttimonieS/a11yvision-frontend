@@ -15,7 +15,7 @@ const Reports: React.FC = () => {
     try {
       const res = await fetch(
         `${
-          import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+          import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id"
         }/api/v1/scans/${scanId}/result`
       );
       const data = await res.json();

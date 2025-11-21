@@ -22,7 +22,7 @@ const ApiKeys: React.FC = () => {
     try {
       const res = await fetch(
         `${
-          import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+          import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id"
         }/api/v1/api-keys`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -39,7 +39,7 @@ const ApiKeys: React.FC = () => {
 
     fetch(
       `${
-        import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+        import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id"
       }/api/v1/api-keys`,
       { headers: { Authorization: `Bearer ${token}` } }
     )
@@ -62,7 +62,7 @@ const ApiKeys: React.FC = () => {
     try {
       const res = await fetch(
         `${
-          import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+          import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id"
         }/api/v1/api-keys`,
         {
           method: "POST",
@@ -96,7 +96,7 @@ const ApiKeys: React.FC = () => {
     try {
       await fetch(
         `${
-          import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+          import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id"
         }/api/v1/api-keys/${keyId}`,
         {
           method: "DELETE",

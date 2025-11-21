@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     fetch(
-      (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000") +
+      (import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id") +
         "/api/v1/stats"
     )
       .then((res) => res.json())
