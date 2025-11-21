@@ -5,6 +5,11 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ['react-router-dom', 'react-router']
-  }
+    include: ["react-router-dom", "react-router", "@remix-run/router"],
+  },
+  build: {
+    commonjsOptions: {
+      include: [/node_modules/],
+    },
+  },
 });
