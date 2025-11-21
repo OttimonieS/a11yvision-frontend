@@ -2,52 +2,38 @@
 
 Accessibility scanning frontend application built with React, TypeScript, and Vite.
 
+## Backend API
+
+Connected to: https://api.a11yvision.labnexus.my.id
+
 ## Deployment to Vercel
-
-### Prerequisites
-
-- A Vercel account
-- Your backend API deployed and accessible
 
 ### Steps
 
-1. **Configure Environment Variables**
-
-   - Copy `.env.example` to `.env.local`
-   - Set `VITE_API_BASE_URL` to your backend API URL
-
-2. **Deploy to Vercel**
-
-   **Option A: Using Vercel CLI**
-
-   ```bash
-   npm install -g vercel
-   vercel
-   ```
-
-   **Option B: Using Vercel Dashboard**
-
+1. **Deploy to Vercel**
    - Push your code to GitHub
    - Connect your repository to Vercel
-   - Vercel will auto-detect the configuration from `vercel.json`
+   - Vercel will auto-detect the configuration from vercel.json
 
-3. **Set Environment Variables in Vercel**
+2. **Set Environment Variables in Vercel**
    - Go to your project settings in Vercel
-   - Navigate to "Environment Variables"
-   - Add `VITE_API_BASE_URL` with your backend API URL
-   - Redeploy if needed
+   - Navigate to Environment Variables
+   - Add: VITE_API_BASE_URL = https://api.a11yvision.labnexus.my.id
+   - Redeploy
 
 ## Local Development
 
-```bash
+`ash
 npm install
 npm run dev
-```
+`
+
+The app will run on http://localhost:5173
 
 ## Build
 
-```bash
+`ash
 npm run build
-```
+`
 
-The build output will be in `dist/`
+The build output will be in dist/
