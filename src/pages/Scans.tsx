@@ -21,8 +21,8 @@ const Scans: React.FC = () => {
   async function refresh() {
     try {
       const res = await fetch(
-        (import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id") +
-          "/api/v1/scans",
+        (import.meta.env.VITE_API_URL ||
+          "https://api.a11yvision.labnexus.my.id") + "/api/v1/scans"
       );
       const data = await res.json();
       setItems(data.items || []);

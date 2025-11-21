@@ -21,7 +21,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // Export for use in custom hook only, not for direct consumption
 export { AuthContext };
 
-const BASE_URL = import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id";
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
