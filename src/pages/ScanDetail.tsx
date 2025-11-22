@@ -34,10 +34,11 @@ const ScanDetail: React.FC = () => {
 
   useEffect(() => {
     if (!scanId) return;
-    
+
     const fetchData = () => {
       fetch(
-        (import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id") +
+        (import.meta.env.VITE_API_URL ||
+          "https://api.a11yvision.labnexus.my.id") +
           `/api/v1/scans/${scanId}/result`
       )
         .then((res) => res.json())
@@ -51,7 +52,7 @@ const ScanDetail: React.FC = () => {
           setLoading(false);
         });
     };
-    
+
     fetchData();
     // Auto-refresh every 3 seconds for running/pending scans
     const interval = setInterval(fetchData, 3000);
@@ -73,7 +74,8 @@ const ScanDetail: React.FC = () => {
         </div>
         <div className="p-4 rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20">
           <p className="text-blue-800 dark:text-blue-200">
-            ⏳ The scan is currently running. This page will auto-refresh every 3 seconds.
+            ⏳ The scan is currently running. This page will auto-refresh every
+            3 seconds.
           </p>
           <p className="text-sm text-blue-700 dark:text-blue-300 mt-2">
             Status: <strong>{result.status}</strong>
