@@ -33,6 +33,9 @@ const Scans: React.FC = () => {
 
   useEffect(() => {
     refresh();
+    // Auto-refresh every 5 seconds to update scan statuses
+    const interval = setInterval(refresh, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   async function handleNewScan() {
@@ -52,6 +55,10 @@ const Scans: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-semibold">Scans</h1>
+        <span className="text-xs text-gray-500">Auto-refreshes every 5s</span>
+      </div>
       <div className="flex flex-col sm:flex-row sm:items-center gap-2">
         <input
           value={newUrl}
