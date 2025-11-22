@@ -18,7 +18,7 @@ Connected to: https://api.a11yvision.labnexus.my.id
 2. **Set Environment Variables in Vercel**
    - Go to your project settings in Vercel
    - Navigate to Environment Variables
-   - Add: VITE_API_BASE_URL = https://api.a11yvision.labnexus.my.id
+   - Add: VITE_API_URL = https://api.a11yvision.labnexus.my.id
    - Redeploy
 
 ## Local Development
