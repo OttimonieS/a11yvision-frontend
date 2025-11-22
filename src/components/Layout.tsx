@@ -36,6 +36,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const handleAuth = () => {
+    if (isAuthenticated) {
+      logout();
+      navigate("/auth");
+    } else {
+      navigate("/auth");
+    }
+  };
+
   return (
     <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       {/* Desktop sidebar */}
@@ -65,12 +74,18 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             );
           })}
         </nav>
-        <div className="p-4 text-xs text-gray-500 dark:text-gray-400">v0.1.0 MVP</div>
+        <div className="p-4 text-xs text-gray-500 dark:text-gray-400">
+          v0.1.0 MVP
+        </div>
       </aside>
 
       {/* Mobile sidebar drawer */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-40 md:hidden" aria-modal="true" role="dialog">
+        <div
+          className="fixed inset-0 z-40 md:hidden"
+          aria-modal="true"
+          role="dialog"
+        >
           <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => setSidebarOpen(false)}
@@ -111,7 +126,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 );
               })}
             </nav>
-            <div className="p-4 text-xs text-gray-500 dark:text-gray-400">v0.1.0 MVP</div>
+            <div className="p-4 text-xs text-gray-500 dark:text-gray-400">
+              v0.1.0 MVP
+            </div>
           </div>
         </div>
       )}
@@ -136,7 +153,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
               aria-label="Toggle theme"
             >
-              {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+              {theme === "light" ? (
+                <Moon className="w-4 h-4" />
+              ) : (
+                <Sun className="w-4 h-4" />
+              )}
             </button>
             {isAuthenticated && user && (
               <span className="hidden xs:inline text-xs text-gray-600 dark:text-gray-300">
@@ -161,14 +182,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="flex-1 overflow-auto px-4 sm:px-6 py-4 sm:py-6 max-w-screen-xl w-full mx-auto">
           {children}
         </div>
-      </main>
-    </div>
-  );
-              )}
-            </button>
-          </div>
-        </header>
-        <div className="p-6 flex-1 overflow-auto">{children}</div>
       </main>
     </div>
   );

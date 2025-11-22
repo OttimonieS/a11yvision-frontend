@@ -10,6 +10,8 @@ interface ScanListItem {
   createdAt: string;
   updatedAt: string;
   issuesCount: number;
+  criticalCount?: number;
+  seriousCount?: number;
 }
 
 const Scans: React.FC = () => {
@@ -88,7 +90,8 @@ const Scans: React.FC = () => {
               <th className="py-2 pr-4">Scan ID</th>
               <th className="py-2 pr-4">URL</th>
               <th className="py-2 pr-4">Status</th>
-              <th className="py-2 pr-4">Issues</th>
+              <th className="py-2 pr-4">Critical</th>
+              <th className="py-2 pr-4">Total Issues</th>
               <th className="py-2 pr-4">Created</th>
               <th className="py-2 pr-4">Actions</th>
             </tr>
@@ -125,6 +128,15 @@ const Scans: React.FC = () => {
                     {it.status}
                   </span>
                 </td>
+                <td className="py-2 pr-4">
+                  {(it.criticalCount || 0) + (it.seriousCount || 0) > 0 ? (
+                    <span className="px-2 py-1 rounded text-xs font-semibold bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">
+                      🚨 {(it.criticalCount || 0) + (it.seriousCount || 0)}
+                    </span>
+                  ) : (
+                    <span className="text-gray-500 text-xs">-</span>
+                  )}
+                </td>
                 <td className="py-2 pr-4">{it.issuesCount}</td>
                 <td className="py-2 pr-4">
                   {new Date(it.createdAt).toLocaleString()}
@@ -142,7 +154,7 @@ const Scans: React.FC = () => {
             ))}
             {items.length === 0 && (
               <tr>
-                <td colSpan={5} className="py-6 text-center text-gray-500">
+                <td colSpan={7} className="py-6 text-center text-gray-500">
                   No scans yet.
                 </td>
               </tr>

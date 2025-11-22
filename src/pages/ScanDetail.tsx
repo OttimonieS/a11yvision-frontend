@@ -150,6 +150,20 @@ const ScanDetail: React.FC = () => {
     return `${bbox.x}, ${bbox.y}, ${bbox.w}, ${bbox.h}`;
   };
 
+  // Filter for critical and serious issues only
+  const criticalIssues = result.issues.filter(
+    (issue) => issue.severity === "critical" || issue.severity === "serious"
+  );
+  const moderateIssues = result.issues.filter(
+    (issue) => issue.severity === "moderate"
+  );
+  const minorIssues = result.issues.filter(
+    (issue) =>
+      issue.severity !== "critical" &&
+      issue.severity !== "serious" &&
+      issue.severity !== "moderate"
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -172,24 +186,51 @@ const ScanDetail: React.FC = () => {
         </p>
       </div>
 
+      {/* Issue Summary */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="p-4 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
+          <p className="text-sm text-red-600 dark:text-red-400 font-semibold">
+            Critical & Serious
+          </p>
+          <p className="text-2xl font-bold text-red-700 dark:text-red-300">
+            {criticalIssues.length}
+          </p>
+        </div>
+        <div className="p-4 rounded-lg border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-900/20">
+          <p className="text-sm text-yellow-600 dark:text-yellow-400 font-semibold">
+            Moderate
+          </p>
+          <p className="text-2xl font-bold text-yellow-700 dark:text-yellow-300">
+            {moderateIssues.length}
+          </p>
+        </div>
+        <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/20">
+          <p className="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+            Minor
+          </p>
+          <p className="text-2xl font-bold text-gray-700 dark:text-gray-300">
+            {minorIssues.length}
+          </p>
+        </div>
+      </div>
+
       {screenshotUrl && (
         <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
           <img src={screenshotUrl} alt="Page screenshot" className="w-full" />
         </div>
       )}
 
-      <div>
-        <h2 className="text-xl font-semibold mb-4">
-          Issues ({result.issues.length})
-        </h2>
-        {result.issues.length === 0 ? (
-          <p className="text-gray-500">No issues found</p>
-        ) : (
+      {/* Critical & Serious Issues */}
+      {criticalIssues.length > 0 && (
+        <div>
+          <h2 className="text-xl font-semibold mb-4 text-red-600 dark:text-red-400">
+            🚨 Critical & Serious Issues ({criticalIssues.length})
+          </h2>
           <div className="space-y-3">
-            {result.issues.map((issue) => (
+            {criticalIssues.map((issue) => (
               <div
                 key={issue.id}
-                className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+                className="p-4 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20"
               >
                 <div className="flex items-start justify-between mb-2">
                   <div>
@@ -197,9 +238,7 @@ const ScanDetail: React.FC = () => {
                       className={`inline-block px-2 py-1 rounded text-xs font-medium ${
                         issue.severity === "critical"
                           ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-                          : issue.severity === "serious"
-                          ? "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
-                          : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                          : "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
                       }`}
                     >
                       {issue.severity}
@@ -220,8 +259,56 @@ const ScanDetail: React.FC = () => {
               </div>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* All Issues (Collapsed) */}
+      <details className="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+        <summary className="cursor-pointer font-semibold text-gray-700 dark:text-gray-300">
+          📋 All Issues ({result.issues.length}) - Click to expand
+        </summary>
+        <div className="mt-4">
+          {result.issues.length === 0 ? (
+            <p className="text-gray-500">No issues found</p>
+          ) : (
+            <div className="space-y-3">
+              {result.issues.map((issue) => (
+                <div
+                  key={issue.id}
+                  className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <span
+                        className={`inline-block px-2 py-1 rounded text-xs font-medium ${
+                          issue.severity === "critical"
+                            ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                            : issue.severity === "serious"
+                            ? "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
+                            : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                        }`}
+                      >
+                        {issue.severity}
+                      </span>
+                      <span className="ml-2 text-sm font-medium">
+                        {issue.rule}
+                      </span>
+                    </div>
+                    <span className="text-xs text-gray-500">{issue.wcag}</span>
+                  </div>
+                  <p className="text-sm mb-2">{issue.message}</p>
+                  <p className="text-xs text-gray-500">
+                    Confidence: {issue.confidence}%
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    BBox: [{formatBBox(issue.bbox)}]
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </details>
     </div>
   );
 };
