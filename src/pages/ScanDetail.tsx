@@ -34,26 +34,86 @@ const ScanDetail: React.FC = () => {
 
   useEffect(() => {
     if (!scanId) return;
-    fetch(
-      (import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id") +
-        `/api/v1/scans/${scanId}/result`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setResult(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
+    
+    const fetchData = () => {
+      fetch(
+        (import.meta.env.VITE_API_URL || "https://api.a11yvision.labnexus.my.id") +
+          `/api/v1/scans/${scanId}/result`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Scan result data:", data);
+          setResult(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch scan:", err);
+          setLoading(false);
+        });
+    };
+    
+    fetchData();
+    // Auto-refresh every 3 seconds for running/pending scans
+    const interval = setInterval(fetchData, 3000);
+    return () => clearInterval(interval);
   }, [scanId]);
 
   if (loading) return <div>Loading scan details...</div>;
   if (!result) return <div>Scan not found</div>;
 
+  // Handle running or pending status
+  if (result.status === "running" || result.status === "pending") {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold">Scan Details</h1>
+          <Link to="/scans" className="text-blue-600 hover:underline">
+            ← Back to Scans
+          </Link>
+        </div>
+        <div className="p-4 rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20">
+          <p className="text-blue-800 dark:text-blue-200">
+            ⏳ The scan is currently running. This page will auto-refresh every 3 seconds.
+          </p>
+          <p className="text-sm text-blue-700 dark:text-blue-300 mt-2">
+            Status: <strong>{result.status}</strong>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle error status
+  if (result.status === "error") {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold">Scan Details</h1>
+          <Link to="/scans" className="text-blue-600 hover:underline">
+            ← Back to Scans
+          </Link>
+        </div>
+        <div className="p-4 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
+          <p className="text-red-800 dark:text-red-200 font-semibold">
+            ❌ The scan failed with an error.
+          </p>
+          {result.error && (
+            <p className="text-sm text-red-700 dark:text-red-300 mt-2">
+              Error: {result.error}
+            </p>
+          )}
+          {(result as any).errorMessage && (
+            <p className="text-sm text-red-700 dark:text-red-300 mt-2">
+              Details: {(result as any).errorMessage}
+            </p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   // Check if scan is not ready yet
-  if (result.status === "not_ready") {
+  if (result.status === "not_ready" || !result.issues) {
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
@@ -64,8 +124,7 @@ const ScanDetail: React.FC = () => {
         </div>
         <div className="p-4 rounded-lg border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-900/20">
           <p className="text-yellow-800 dark:text-yellow-200">
-            ⚠️ Scan results are not ready yet. The scan may still be running or
-            may have encountered an error.
+            ⚠️ Scan results are not ready yet.
           </p>
           <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-2">
             Please check the Scans page to see the current status.
